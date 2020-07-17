@@ -1,11 +1,19 @@
-{% if q_list %}
-    <ul>
-        {% for question in q_list %}
+{% load static %}
 
-        <!-- <li><a href="/polls/{{ question.id }}/">{{ question.question_text}}</a></li> -->
-        <li><a href="{% url 'polls:detail' question.id %}"> {{ question.question_text}}</a></li>
-        {% endfor %}
-    </ul>
+<!-- <link rel="stylesheet" href="/polls/static/polls/style.css" /> -->
+<link rel="stylesheet" href="{% static 'polls/style.css' %}">
+<p> {{request.session.user_id}}님 반갑습니다.</p>
+{% if q_list %}
+<ul>
+    {% for question in q_list %}
+    <li>
+        <!-- <a href="/polls/{{ question.id }}/">{{ question.question_text }}</a> -->
+        <a href="{% url 'polls:detail' question.id %}"> {{ question.question_text }}</a>
+        ( {{ question.choice_set.all | length}}개 )<br>
+        <!-- ({{ question.choice_set.count }}개) -->
+    </li>
+   {% endfor %}
+</ul>
 {% else %}
     <p>No polls are available.</p>
 {% endif %}
